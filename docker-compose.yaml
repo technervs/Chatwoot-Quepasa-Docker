@@ -15,6 +15,7 @@ services:
     env_file: ./quepasa-chatwoot/.env
     volumes:
       - /data/storage:/app/storage
+    restart: always
     stdin_open: true
     tty: true
     depends_on:
@@ -54,6 +55,7 @@ services:
       - NODE_ENV=production
       - RAILS_ENV=production
       - INSTALLATION_ENV=docker
+    restart: always
     networks:
       - quepasa-network
     entrypoint: docker/entrypoints/rails.sh
@@ -107,6 +109,7 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: "demo@demo.com.br"
       PGADMIN_DEFAULT_PASSWORD: "PgAdmin2021!"
+    restart: always
     depends_on:
       - postgres
     networks:
@@ -140,6 +143,7 @@ services:
       - "8081:8081" #quepasa
       - "8082:8082" #pgadmin
       - "8083:8083" #redis
+    restart: always
     networks:
       - quepasa-network
     depends_on:
