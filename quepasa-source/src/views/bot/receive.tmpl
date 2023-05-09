@@ -1,0 +1,23 @@
+{{ define "content" }}
+{{ $DOWNLOADPREFIX := .DownloadPrefix }}
+{{ if .ErrorMessage }}
+<div class="notification is-warning">
+  {{ .ErrorMessage }}
+</div>
+{{ end }}
+
+<h2 class="title is-2">Messages for {{ .Number }}</h2>
+{{ range .Messages }}
+<pre>
+  On: {{ .Timestamp }} => ID: {{ .Id }} => From Me: {{ .FromMe }}{{ if .HasAttachment }} => Attachment: <a download target="_blank" title="{{ .Attachment.Mimetype }} {{ if .Attachment.FileName }}({{ .Attachment.FileName }}){{ end }}" href="{{ $DOWNLOADPREFIX }}{{ .Id }}">Download</a>{{ end }}  
+  Type: {{ .Type }} => Chat:  {{ .Chat }}{{ if .Participant }}
+  Participant:  {{ .Participant }}{{ end }}{{ if .TrackId }}
+  TrackId:  {{ .TrackId }}{{ end }}{{ if .InReply }}
+  InReply:  {{ .InReply }}{{ end }}{{ if .Text }}
+  Text: {{ .Text }}{{ end }}
+</pre>
+<br/>
+{{ end }}
+
+<a href="/form/account">Back</a>
+{{ end }}

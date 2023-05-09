@@ -1,0 +1,151 @@
+version: '3'
+
+secrets:
+  pgpassword:
+    external: true
+  signing_secret:
+    external: true
+
+services:
+  base:
+    &base
+    image: chatwoot/chatwoot:latest
+    container_name: chatwoot
+    hostname: chatwoot
+    env_file: .env
+    volumes:
+      - /data/storage:/app/storage
+    stdin_open: true
+    tty: true
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - quepasa-network
+
+  quepasa:
+    image: quepasa
+    container_name: "quepasa"
+    mem_limit: 4096M
+    env_file:
+      - ./quepasa-source/helpers/.env
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    build:
+      context: ./
+      dockerfile: ./quepasa-source/docker/Dockerfile
+    volumes:
+      - ./quepasa-source/src:/opt/quepasa
+    # command: /bin/bash docker-entrypoint.sh
+    restart: always
+    stdin_open: true
+    tty: true
+    networks:
+      - quepasa-network
+
+  rails:
+    <<: *base
+    container_name: chatwoot-rails
+    hostname: chatwoot-rails
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      - NODE_ENV=production
+      - RAILS_ENV=production
+      - INSTALLATION_ENV=docker
+    networks:
+      - quepasa-network
+    entrypoint: docker/entrypoints/rails.sh
+    command: >
+      sh -c "while ! nc -z postgres 5432; do sleep 1; done;
+             bundle exec rails db:chatwoot_prepare;
+             bundle exec rails s -p 3000 -b '0.0.0.0';
+             bundle install"
+
+  sidekiq:
+    <<: *base
+    container_name: chatwoot-sidekiq
+    hostname: chatwoot-sidekiq
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      - NODE_ENV=production
+      - RAILS_ENV=production
+      - INSTALLATION_ENV=docker
+    networks:
+      - quepasa-network
+    restart: unless-stopped
+    command:
+      [
+        'bundle',
+        'exec',
+        'sidekiq',
+        '-C',
+        'config/sidekiq.yml'
+      ]
+
+  postgres:
+    image: postgres:12
+    container_name: chatwoot-postgres
+    hostname: chatwoot-postgres
+    restart: always
+    volumes:
+      - ./quepasa-chatwoot/data/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=chatwoot
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=chatwoot
+    networks:
+      - quepasa-network
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: chatwoot-pgadmin4
+    hostname: chatwoot-pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "demo@demo.com.br"
+      PGADMIN_DEFAULT_PASSWORD: "PgAdmin2021!"
+    depends_on:
+      - postgres
+    networks:
+      - quepasa-network
+
+  redis:
+    image: redis:alpine
+    container_name: chatwoot-redis
+    hostname: chatwoot-redis
+    restart: always
+    command:
+      [
+        "sh",
+        "-c",
+        "redis-server --requirepass \"$REDIS_PASSWORD\""
+      ]
+    env_file: .env
+    volumes:
+      - ./quepasa-chatwoot/data/redis:/data
+    networks:
+      - quepasa-network
+
+  nginx:
+    build:
+      context: ./quepasa-nginx
+      dockerfile: Dockerfile
+    container_name: nginx
+    entrypoint: nginx -g "daemon off;"
+    ports:
+      - "8080:8080" #chatwoot
+      - "8081:8081" #quepasa
+      - "8082:8082" #pgadmin
+      - "8083:8083" #redis
+    networks:
+      - quepasa-network
+    depends_on:
+      - quepasa
+
+networks:
+  quepasa-network:
+    name: quepasa-network
+    driver: bridge
