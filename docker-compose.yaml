@@ -12,7 +12,7 @@ services:
     image: chatwoot/chatwoot:latest
     container_name: chatwoot
     hostname: chatwoot
-    env_file: .env
+    env_file: ./quepasa-chatwoot/.env
     volumes:
       - /data/storage:/app/storage
     stdin_open: true
@@ -123,7 +123,7 @@ services:
         "-c",
         "redis-server --requirepass \"$REDIS_PASSWORD\""
       ]
-    env_file: .env
+    env_file: ./quepasa-chatwoot/.env
     volumes:
       - ./quepasa-chatwoot/data/redis:/data
     networks:
