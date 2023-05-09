@@ -38,24 +38,17 @@ docker-compose up --build -d
 Este comando irá construir as imagens e iniciar os seguintes containers:
 
 **• nginx**
-
 **• quepasa**
-
 **• chatwoot**
-
 **• chatwoot-rails**
-
 **• chatwoot-sidekiq**
-
 **• chatwoot-pgadmin4**
-
 **• chatwoot-postgres**
-
 **• chatwoot-redis**
 
 Aguarde alguns minutos para que todos os serviços sejam iniciados.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b79832e2-2f82-4caa-a3c4-94bbbc42813a/Untitled.png)
+![Portainer](https://technervs.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fb79832e2-2f82-4caa-a3c4-94bbbc42813a%2FUntitled.png?id=25816eb4-192a-48de-866e-541c1de895cf&table=block&spaceId=5c8ae723-5bac-4d9d-8118-cde809eef646&width=2000&userId=&cache=v2)
 
 ## **Passo 4: Acesse o Chatwoot**
 
@@ -63,7 +56,7 @@ Após a inicialização dos containers, abra o navegador e acesse o Chatwoot em 
 
 ## **Passo 5: Acesse a API Quepasa**
 
-Após a inicialização dos containers, abra o navegador e acesse a API Quepasa em **`http://localhost:8081/setup`**e crie seu login utilizando uma senha forte.
+Após a inicialização dos containers, abra o navegador e acesse a API Quepasa em **`http://localhost:8081/setup`** e crie seu login utilizando uma senha forte.
 
 ## **Passo 6: Acesse o PgAdmin**
 
@@ -75,10 +68,7 @@ Caso deseje, você pode configurar outras opções nos arquivos **`docker-compos
 
 ## **Conclusão**
 
-<aside>
-💡 Portas configuradas no Nginx para cada aplicação. Para alterar as portas é necessário ajustas os arquivos **`docker-compose.yml` e `nginx.conf`.**
-
-</aside>
+💡 Portas configuradas no Nginx para cada aplicação. Para alterar as portas é necessário ajustas os arquivos **`docker-compose.yml`** e **`nginx.conf`**.
 
 ```
 - "8080:8080" #chatwoot
