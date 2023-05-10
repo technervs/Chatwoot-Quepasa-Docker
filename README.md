@@ -104,7 +104,5 @@ Caso deseje, você pode configurar outras opções nos arquivos **`docker-compos
 ## 🚀 **Não deixe este projeto morrer, apoie-nos!**
 
 <a href="https://nubank.com.br/pagar/4oyat/OzwgAw9rmW">
-  <button style="background-color: #820ad1; color: #FFF; border-radius: 9px; border: none; padding: 5px 32px; text-align: center; display: flex; align-items: center; justify-content: center; font-size: 16px; margin: 4px 2px; cursor: pointer;">
-    <img src="https://s3-sa-east-1.amazonaws.com/postcast.estaticos/57/1655121305211-113bf05ea9683dca430f57bc59241a5e.png" alt="Nubank" style="height: 50px; width: auto; margin-right: 10px;"> Chave PIX
-  </button>
+  <img src="https://img.shields.io/badge/Chave%20PIX%20Nubank-%23820ad1?style=for-the-badge&logo=nubank&logoColor=white" alt="Chave PIX Nubank">
 </a>
