@@ -102,9 +102,8 @@ Caso deseje, você pode configurar outras opções nos arquivos **`docker-compos
 
 ## 🚀 **Não deixe este projeto morrer, apoie-nos!**
 
-|                      |                                                                                                 |
-|----------------------|-------------------------------------------------------------------------------------------------|
 | Se você está desfrutando dos nossos projetos no GitHub e deseja ver mais conteúdo de qualidade, considere fazer uma doação via Pix para apoiar nosso trabalho na comunidade. Sua contribuição nos ajuda a continuar criando soluções inovadoras e mantendo nossos projetos atualizados. Junte-se a nós para construirmos juntos uma comunidade mais forte e sustentável. Obrigado pelo seu apoio! |
+| --- |
 
 <a href="https://nubank.com.br/pagar/4oyat/OzwgAw9rmW">
   <img src="https://img.shields.io/badge/Chave%20PIX%20Nubank-%23820ad1?style=for-the-badge&logo=nubank&logoColor=white" alt="Chave PIX Nubank" style="border-radius: 4px;">
